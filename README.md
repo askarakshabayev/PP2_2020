@@ -2,6 +2,7 @@ Lecture 3
 List Comprehensions examples
 1. 
 list1 = [4, 2, 6, 7]
+list2 = [8, 4, 12, 14]
 list2 = [elem * 2 for elem in list1]
 print (list2)
 
@@ -24,6 +25,7 @@ print(res_prime)
 3. __iter__ and __next__ methods
 * Python iterator object must implement two special methods, __iter__() and __next__(), collectively called the iterator protocol.
 * The iter() function (which in turn calls the __iter__() method) returns an iterator from them.
+list, tuple, dict, set
 
 Examples:
 3.1
@@ -115,6 +117,8 @@ class Student:
         
 a = Student("a", "b")
 print(a)
+
+methods example
 
 
 
