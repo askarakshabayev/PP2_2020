@@ -1,10 +1,162 @@
+Lecture 3
+List Comprehensions examples
+1. 
+list1 = [4, 2, 6, 7]
+list2 = [elem * 2 for elem in list1]
+print (list2)
+
+2. Using comprehensions print all prime numbers between 1, 1000
+import math
+
+def f(x):
+    if x == 1:
+        return False
+    for i in range(2, int(math.sqrt(x)) + 1):
+        if x % i == 0:
+            return False
+
+    return True
+
+res = list(range(1, 1000))
+res_prime = [item for item in res if f(item)]
+print(res_prime)
+
+3. __iter__ and __next__ methods
+* Python iterator object must implement two special methods, __iter__() and __next__(), collectively called the iterator protocol.
+* The iter() function (which in turn calls the __iter__() method) returns an iterator from them.
+
+Examples:
+3.1
+l = [2, 5, 6, 10]
+it = iter(l)
+next(it)
+next(it)
+it.__next__()
+
+3.2
+for item in l:
+  print(item)
+------------------------------
+it = iter(l)
+
+while True:
+  try:
+    element = next(it)
+    print(element)
+  except StopIteration:
+    break
+------------------------------
+4. Python Generators
+Generator is a function that returns an object (iterator) which we can iterate over (one value at a time).
+
+If a function contains at least one yield statement (it may contain other yield or return statements), it becomes a generator function. Both yield and return will return some value from a function.
+
+The difference is that, while a return statement terminates a function entirely, yield statement pauses the function saving all its states and later continues from there on successive calls.
+
+Differences between Generator function and a Normal function
+* Generator function contains one or more yield statement.
+* When called, it returns an object (iterator) but does not start execution immediately.
+* Methods like __iter__() and __next__() are implemented automatically. So we can iterate through the items using next().
+* Once the function yields, the function is paused and the control is transferred to the caller.
+* Local variables and their states are remembered between successive calls.
+* Finally, when the function terminates, StopIteration is raised automatically on further calls.
+
+4.1.
+------------------------------
+# A simple generator function
+def generator_exampe():
+    n = 1
+    print('first print')
+    yield n
+
+    n += 1
+    print('second print')
+    yield n
+
+    n += 1
+    print('third print')
+    yield n
+
+a = generator_example()
+print(next(a))
+print(next(a))
+------------------------------
+def fib():
+    a = 1
+    b = 1
+    while True:
+        yield a + b
+        a, b = b, a + b
+
+a = fib()
+print(next(a))
+print(next(a))
+------------------------------
+Python Generator Expression
+my_list = [1, 3, 6, 10]
+
+# square each term using list comprehension
+# Output: [1, 9, 36, 100]
+[x**2 for x in my_list]
+
+# same thing can be done using generator expression
+# Output: <generator object <genexpr> at 0x0000000002EBDAF8>
+a = (x**2 for x in my_list)
+next(a)
+
+sum(x**2 for x in my_list)
+max(x**2 for x in my_list)
+-----------------------------
+5. Class
+class Student:
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
+        
+a = Student("a", "b")
+print(a)
+
+
+
+
+------------------------------
+
+Class
+iterator example
+------------------------------
+class PowTwo:
+    """Class to implement an iterator
+    of powers of two"""
+
+    def __init__(self, max = 0):
+        self.max = max
+
+    def __iter__(self):
+        self.n = 0
+        return self
+
+    def __next__(self):
+        if self.n <= self.max:
+            result = 2 ** self.n
+            self.n += 1
+            return result
+        else:
+            raise StopIteration
+------------------------------
+
+
+
+
+
 Lecture 2
+tuple, string, dictionaries, files, directories
+
 Tuple (immutable)
 my_tuple = ()
 my_tuple = (1, 2, 3)
 my_tuple = (1, "Hello", 3.4)
 my_tuple = ("mouse", [8, 4, 6], (1, 2, 3))
-my_tuple = 3, 4.6, "dog"
+my_tuple = 3, 4.6, "pp2"
 a, b, c = my_tuple # unpacking
 my_tuple = ("hello",)  
 ------------------------
@@ -65,7 +217,7 @@ my_dict = {'name': 'John', 1: [2, 4, 3]}
 # using dict()
 my_dict = dict({1:'apple', 2:'ball'})
 
-my_dict.get(key)
+my_dict.get(key, "ppp")
 my_dict[key]
 # add item
 my_dict[key] = value
@@ -82,6 +234,7 @@ a_file = open('1.txt', encoding='utf-8')
 # Stream
 a_string = a_file.read() - reads whole file
 a_string = a_file.readline() - read one line
+a_string = a_file.readlines() - list of lines
 # File object methods
 a_file.name
 a_file.encoding
@@ -107,12 +260,8 @@ with open("1.txt") as file:
 with open("2.txt", mode='w') as file: # mode = 'w', mode = 'a', mode = 'r', mode = 'rb'
   file.write("test")
 
-# 
-a_string = 'Test string'
-import io
-a_file = io.StringIO(a_string)
-a_file.read()
-
+# Current directory
+os.getcwd()
 # Getting a Directory Listing
 # listdir (returns list)
 import os
