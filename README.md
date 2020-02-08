@@ -1,3 +1,167 @@
+Lecture 4
+Regex
+simple text ---	В точности текст «simple text»
+
+\d{5}	--- Последовательности из 5 цифр
+\d --- означает любую цифру {5} — ровно 5 раз
+\d\d/\d\d/\d{4}	--- Даты в формате ДД/ММ/ГГГГ (и прочие куски, на них похожие, например 98/76/5432)
+\b\w{3}\b	--- Слова в точности из трёх букв \b означает границу слова (с одной стороны буква, а с другой — нет) \w — любая буква, {3} — ровно три раза
+[-+]?\d+ ---	Целое число, например, 7, +17, -42, 0013 (возможны ведущие нули) [-+]? — либо -, либо +, либо пусто \d+ — последовательность из 1 или более цифр
+-------------------------------------
+.	    -- Один любой символ, кроме новой строки \n
+\d    -- Любая цифра (ab\d\d - ab34, ab56)
+\D    -- Любой символ, кроме цифры
+\s	  -- Любой пробельный символ (пробел, табуляция, конец строки и т.п.)
+\S	  -- Любой непробельный символ
+\w	  -- Любая буква (то, что может быть частью слова), а также цифры и _
+\W	  -- Любая не-буква, не-цифра и не подчёркивание
+[..]	-- Один из символов в скобках, а также любой символ из диапазона a-b	[0-9][0-9A-Fa-f]
+[^..]	-- Любой символ, кроме перечисленных
+-----------------------------
+^ - Caret
+^a	a	1 match
+    abc	1 match
+    bac	No match
+^ab	abc	1 match
+    acb	No match (starts with a but not followed by b)
+-----------------------------
+$ - Dollar
+a$	a	1 match
+    formula	1 match
+    cab	No match
+-----------------------------
+ma*n	mn	1 match
+      man	1 match
+      maaan	1 match
+      main	No match (a is not followed by n)
+      woman	1 match
+-----------------------------
+\b - Matches if the specified characters are at the beginning or end of a word.
+
+\bfoo	football	Match
+      a football	Match
+      afootball	No match
+
+foo\b	the foo	Match
+      the afoo test	Match
+      the afootest	No match
+-----------------------------
+
+{n}	Ровно n повторений
+{m,n}	От m до n повторений включительно
+{m,}	Не менее m повторений
+{,n}	Не более n повторений
+?	Ноль или одно вхождение, синоним {0,1}
+*	Ноль или более, синоним {0,}
++	Одно или более, синоним {1,}
+
+re.search(pattern, string)	-- Найти в строке string первую строчку, подходящую под шаблон pattern;
+
+re.fullmatch(pattern, string) --	Проверить, подходит ли строка string под шаблон pattern;
+re.split(pattern, string, maxsplit=0)	Аналог str.split(), только разделение происходит по подстрокам, подходящим под шаблон pattern;
+
+re.findall(pattern, string)	Найти в строке string все непересекающиеся шаблоны pattern;
+
+re.finditer(pattern, string)	Итератор всем непересекающимся шаблонам pattern в строке string (выдаются match-объекты);
+
+re.sub(pattern, repl, string, count=0)	Заменить в строке string все непересекающиеся шаблоны pattern на repl;
+--------------------------------
+Вывести все числа в строке
+import re
+string = 'hello 12 hi 89. Test 34'
+pattern = '\d+'
+result = re.findall(pattern, string) 
+print(result)
+
+--------------------------------
+import re 
+
+match = re.search(r'\d\d\D\d\d', r'Телефон 123-12-12') 
+print(match[0] if match else 'Not found') 
+
+match = re.search(r'\d\d\D\d\d', r'Телефон 1231212') 
+print(match[0] if match else 'Not found') 
+
+
+match = re.fullmatch(r'\d\d\D\d\d', r'12-12') 
+print('YES' if match else 'NO') 
+
+match = re.fullmatch(r'\d\d\D\d\d', r'Т. 12-12') 
+print('YES' if match else 'NO') 
+
+
+print(re.split(r'\W+', 'Где, скажите мне, мои очки??!')) 
+
+
+print(re.findall(r'\d\d\.\d\d\.\d{4}', 
+                 r'Эта строка написана 19.01.2018, а могла бы и 01.09.2017')) 
+# -> ['19.01.2018', '01.09.2017'] 
+
+for m in re.finditer(r'\d\d\.\d\d\.\d{4}', r'Дата рождения 13.02.1920, сегодня 08.02.2020'): 
+    print('Дата', m[0], 'начинается с позиции', m.start()) 
+# -> Дата 19.01.2018 начинается с позиции 20 
+# -> Дата 01.09.2017 начинается с позиции 45 
+
+print(re.sub(r'\d\d\.\d\d\.\d{4}', 
+             r'DD.MM.YYYY', 
+             r'Эта строка написана 19.01.2018, а могла бы и 01.09.2017')) 
+# -> Эта строка написана DD.MM.YYYY, а могла бы и DD.MM.YYYY 
+------------------------------
+import re
+
+txt = "The rain in Spain"
+x = re.search("\s", txt)
+
+print("The first white-space character is located in position:", x.start())
+------------------------------
+Replace every white-space character with the number 9:
+
+import re
+
+txt = "The rain in Spain"
+x = re.sub("\s", "9", txt)
+print(x)
+------------------------------
+Print the position (start- and end-position) of the first match occurrence.
+The regular expression looks for any words that starts with an upper case "S":
+
+import re
+
+txt = "The rain in Spain"
+x = re.search(r"\bS\w+", txt)
+print(x.span())
+# print(x.group())
+------------------------------
+email example
+phone example
+^a...s$
+------------------------------
+
+Data serialization
+Flat vs. Nested data
+{"type":"A", "field1":"value1", "field2":"value2"}
+{
+  "A":
+  {"field1": "value1", "field2":"value2"}
+}
+------------------------------
+Serializing text to file
+a = {"type":"A", "field1":"value1", "field2":"value2"}
+file = open("output.txt", "w")
+file.write(repr(a))
+file.close()
+------------------------------
+csv file 
+import csv
+with open('file.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerows(a)
+------------------------------
+import json
+with open('output.txt', 'r') as f:
+    data = f.read()
+
+
 Lecture 3
 List Comprehensions examples
 1. 
@@ -119,10 +283,6 @@ a = Student("a", "b")
 print(a)
 
 methods example
-
-
-
-
 ------------------------------
 
 Class
@@ -147,10 +307,6 @@ class PowTwo:
         else:
             raise StopIteration
 ------------------------------
-
-
-
-
 
 Lecture 2
 tuple, string, dictionaries, files, directories
