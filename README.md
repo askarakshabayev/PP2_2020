@@ -1,3 +1,336 @@
+Lecture 6
+Python built in functions
+------------------------------------------------
+abs()
+------------------------------------------------
+all()
+mylist = [True, True, True]
+x = all(mylist)
+
+mylist = [0, 1, 1]
+x = all(mylist)
+
+mytuple = (0, True, False)
+x = all(mytuple)
+
+mydict = {0 : "Apple", 1 : "Orange"}
+x = all(mydict)
+
+data = 
+[
+    {
+        'title': "Super page",
+        'description': "Super puper page",
+        'id': 'page_super',
+        'data': {}
+    },
+    {
+        'title': "Super super page",
+        'description': "Super puper page2",
+        'id': 'page_super_super',
+        'data': {}
+    },
+]
+keys = ['title', 'description', 'id', 'data',]
+for d in data:
+    for key in keys:
+        if key not in d.keys():
+              raise ValueError("Not valid data")
+
+for d in data:
+    if not all( [key in d.keys() for key in keys ] ):
+         raise ValueError("Not valid data")
+
+if not all( [key in d.keys() for key in keys for d in data] ):
+    raise ValueError("Not valid data")
+------------------------------------------------
+any()
+mytuple = (0, 1, False)
+x = any(mytuple)
+
+mydict = {0 : "Apple", 1 : "Orange"}
+x = any(mydict)
+
+numbers = [1,10,100,1000,10000]
+if any(number < 10 for number in numbers):
+    print('Success')
+------------------------------------------------
+bin()
+a = bin(6)
+------------------------------------------------
+callable()
+x = 5
+print(callable(x))
+
+def testFunction():
+  print("Test")
+
+y = testFunction
+print(callable(y))
+------------------------------------------------
+chr()
+x = chr(97)
+------------------------------------------------
+ord()
+x = ord("h")
+------------------------------------------------
+eval(), exec()
+x = 'print(55)'
+eval(x)
+
+x = 'name = "Askar"\nprint(name)'
+exec(x)
+------------------------------------------------
+compile() Parameters
+source - a normal string, a byte string, or an AST object
+filename - file from which the code was read. If it wasn't read from a file, you can give a name yourself
+mode - Either exec or eval or single.
+eval - accepts only a single expression.
+exec - It can take a code block that has Python statements, class and functions and so on.
+
+codeInString = 'a = 5\nb=6\nsum=a+b\nprint("sum =",sum)'
+codeObejct = compile(codeInString, 'sumstring', 'exec')
+
+exec(codeObejct)
+------------------------------------------------
+complex()
+x = complex(3, 5)
+------------------------------------------------
+dir()
+class Person:
+  name = "John"
+  age = 36
+  country = "Norway"
+
+print(dir(Person))
+------------------------------------------------
+getattr()
+class Person:
+  name = "John"
+  age = 36
+  country = "Norway"
+
+x = getattr(Person, 'page', 'my message')
+------------------------------------------------
+hasattr()
+class Person:
+  name = "John"
+  age = 36
+  country = "Norway"
+
+x = hasattr(Person, 'age')
+------------------------------------------------
+delattr()
+class Person:
+  name = "John"
+  age = 36
+  country = "Norway"
+
+delattr(Person, 'age')
+------------------------------------------------
+dict()
+x = dict(name = "ABC", surname = "DEF")
+------------------------------------------------
+divmod()
+x = divmod(5, 2)
+------------------------------------------------
+enumerate()
+x = ('apple', 'banana', 'cherry')
+y = enumerate(x)
+
+for t in y:
+  print(t)
+------------------------------------------------
+filter(function, iterable)
+ages = [5, 12, 17, 18, 24, 32]
+
+def myFunc(x):
+  if x < 18:
+    return False
+  else:
+    return True
+
+adults = filter(myFunc, ages)
+
+for x in adults:
+  print(x)
+------------------------------------------------
+float()
+x = float(3)
+------------------------------------------------
+frozenset()
+mylist = ['apple', 'banana', 'cherry']
+x = frozenset(mylist)
+x[1] = "strawberry"
+------------------------------------------------
+x = globals()
+print(x)
+------------------------------------------------
+x = hex(255)
+------------------------------------------------
+id()
+x = ('apple', 'banana', 'cherry')
+y = id(x)
+------------------------------------------------
+int()
+x = int(3.5)
+------------------------------------------------
+isinstance()
+x = isinstance("Hello", str)
+x = isinstance("Hello", int)
+x = isinstance("Hello", (float, int, str, list, dict, tuple))
+------------------------------------------------
+iter()
+x = iter(["apple", "banana", "cherry"])
+print(next(x))
+print(next(x))
+print(next(x))
+------------------------------------------------
+generators (returns iter)
+def fib():
+    a = 1
+    b = 1
+    while True:
+        yield a + b
+        a, b = b, a + b
+
+a = fib()
+print(next(a))
+print(next(a))
+------------------------------------------------
+len()
+mylist = ["apple", "banana", "cherry"]
+x = len(mylist)
+------------------------------------------------
+map()
+Example 1
+def myfunc(n):
+  return len(n)
+
+x = map(myfunc, ('apple', 'banana', 'cherry'))
+Example 2
+def myfunc(a, b):
+  return a + b
+
+x = map(myfunc, ('apple', 'banana', 'cherry'), ('orange', 'lemon', 'pineapple'))
+------------------------------------------------
+max(), min()
+x = max(5, 10)
+x = max("Mike", "John", "Vicky")
+a = (1, 5, 3, 9)
+x = max(a)
+max(a,key=abs)
+------------------------------------------------
+oct()
+x = oct(12)
+------------------------------------------------
+pow()
+x = pow(4, 3)
+x = pow(4, 3, 5) => (4 ^ 3) % 5
+------------------------------------------------
+range()
+x = range(6)
+for n in x:
+  print(n)
+------------------------------------------------
+reversed()
+alph = ["a", "b", "c", "d"]
+ralph = reversed(alph)
+for x in ralph:
+  print(x)
+------------------------------------------------
+round()
+x = round(5.7)
+x = round(5.2)
+x = round(5.76543, 2)
+------------------------------------------------
+slice()
+a = ("a", "b", "c", "d", "e", "f", "g", "h")
+x = slice(2)
+# x = slice(3, 5)
+# x = slice(0, 8, 3)
+print(a[x])
+------------------------------------------------
+sorted()
+a = ("b", "g", "a", "d", "f", "c", "h", "e")
+x = sorted(a)
+print(x)
+------------------------------------------------
+str()
+str(3.5)
+------------------------------------------------
+type()
+a = ('apple', 'banana', 'cherry')
+b = "Hello World"
+c = 33
+
+x = type(a)
+y = type(b)
+z = type(c)
+------------------------------------------------
+zip()
+a = (1, 2, 3)
+b = (4, 5, 6, 7)
+
+x = zip(a, b)
+------------------------------------------------
+join(list)
+a = ["abc", "def", "ghi"] 
+print(" ".join(a))
+------------------------------------------------
+chain condition
+n = 10
+result = 1 < n < 20
+print(result) 
+result = 1 > n <= 9
+print(result)
+------------------------------------------------
+import os; 
+import socket; 
+  
+print(os) 
+print(socket)
+------------------------------------------------
+Use Of Enums In Python
+class Week: 
+    Monday, Thuesday, Wednesday, Thursday, Friday, Saturday, Sunday = range(7) 
+  
+print(Week.Thuesday) 
+print(Week.Friday) 
+print(Week.Monday)
+------------------------------------------------
+Return Multiple Values From Functions
+def x(): 
+    return 1, 2, 3, 4
+a, b, c, d = x() 
+  
+print(a, b, c, d)
+------------------------------------------------
+Find The Most Frequent Value In A List
+test = [1, 2, 3, 4, 2, 2, 3, 1, 4, 4, 4, 1, 1, 1, 1] 
+print((set(test), key = test.count)
+------------------------------------------------
+count each symbol
+from collections import Counter
+Counter("aabbcc")
+Checking if two words are 
+------------------------------------------------
+args, kwargs in function
+Unpack function arguments
+def test(x, y, z):
+	print(x, y, z)
+
+testDict = {'x': 1, 'y': 2, 'z': 3} 
+testList = [10, 20, 30]
+
+test(*testDict)
+test(**testDict)
+
+------------------------------------------------
+------------------------------------------------
+
+
+
 Lecture 5
 Regex
 ------------------------------------------------
