@@ -1,3 +1,80 @@
+Lecture 9
+pip
+Example of two projects with different dependencies
+What is virtualenv
+python3 -m venv env
+source env/bin/activate
+------------------------------------------------
+import sys
+print(sys.prefix)
+------------------------------------------------
+pip install pygame
+where pygame installed?
+------------------------------------------------
+which python
+------------------------------------------------
+pip install pygame (MacOS, Linux)
+pip install whl_file (https://www.pygame.org/download.shtml) (Windows)
+------------------------------------------------
+import pygame
+
+pygame.init() # This initializes all the modules required for PyGame
+screen = pygame.display.set_mode((400, 300)) # This will launch a window of the desired size.
+
+done = False
+
+while not done:
+    for event in pygame.event.get(): # this empties the event queue. 
+        if event.type == pygame.QUIT:
+            done = True
+    pygame.display.flip()
+
+# pygame.QUIT - This is the event type that is fired when you click on the close button in the corner of the window.
+
+# pygame.display.flip() - PyGame is double-buffered. This swaps the buffers. All you need to know is that this call is required in order for any updates that you make to the game screen to become visible.
+------------------------------------------------
+Draw rectangle
+pygame.draw.rect(screen, (0, 128, 255), pygame.Rect(30, 30, 60, 60)) #RGB
+------------------------------------------------
+event.type (pygame.KEYDOWN)
+event.key  (pygame.K_SPACE)
+Change color of rectangle example
+------------------------------------------------
+List all possible keys
+import pygame
+for key in dir(pygame):
+  if key.startswith("K_"):
+    print(key)
+------------------------------------------------
+all keys has unique integer number 
+pygame.K_LEFTBRACKET
+There is an additional way to access key events. You can get the depression status of any key by calling pygame.key.get_pressed()
+up_pressed = pygame.key.get_pressed()[pygame.K_UP]
+
+pressed = pygame.key.get_pressed()
+------------------------------------------------
+screen.fill((0, 0, 0))
+------------------------------------------------
+Change rectangle with image
+www.flaticon.com
+playerImage = pygame.image.load("player.png")
+def player():
+    screen.blit(playerImage, (x, y))
+------------------------------------------------
+move image without pressing the key example
+x_change = 0
+if event.type == pygame.KEYDOWN:
+  if event.key == pygame.K_LEFT:
+    x_change -= 0.3
+  if event.key == pygame.K_RIGHT:
+    x_change += 0.3
+if event.type == pygame.KEYUP:
+  x_change = 0
+------------------------------------------------
+
+
+
+
 Lecture 6
 Python built in functions
 ------------------------------------------------
