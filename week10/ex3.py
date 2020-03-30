@@ -19,13 +19,16 @@ class Snake:
         for element in self.elements:
             pygame.draw.circle(screen, (255, 0, 0), element, self.radius)
 
+    def add_to_snake(self):
+        self.size += 1
+        self.elements.append([0, 0])
+        self.is_add = False
+
     def move(self):
         if self.is_add:
-            self.size += 1
-            self.elements.append([0, 0])
-            self.is_add = False
+            self.add_to_snake()
 
-        for i in range(len(self.elements) - 1, 0, -1):
+        for i in range(self.size - 1, 0, -1):
             self.elements[i][0] = self.elements[i - 1][0]
             self.elements[i][1] = self.elements[i - 1][1]
 

@@ -45,6 +45,7 @@ while not done:
         x_change = 0
 
     screen.fill((0, 0, 0))
+    screen.
     screen.blit(background, (0, 0))
     x += x_change
     enemy_x += x_enemy_change
